@@ -3,34 +3,27 @@
 import './App.css';
 import './flyweight-theme.scss';
 
-import { alertClear, alertStore } from './redux/alertStore';
-import { connected, connectionStore, disconnected } from './redux/connectionStore';
-
-import Banner from './components/Banner';
+import Button from './components/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import FlyweightAlert from './components/FlyweightAlert';
+import DiagramOrderCancellation from './components/DiagramOrderCancellation';
+import DiagramOrderCreation from './components/DiagramOrderCreation';
+import DiagramOrderExecution from './components/DiagramOrderExecution';
 import Header from './components/Header';
-import NewOrderCard from './components/NewOrderCard';
-import OrdersCard from './components/OrdersCard';
-import PlainTextLoginModal from './components/PlainTextLoginModal';
+import Logo from './components/Logo';
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Stack from 'react-bootstrap/Stack';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 import WelcomeCard from './components/WelcomeCard';
 import detectEthereumProvider from '@metamask/detect-provider';
 import { ethers } from 'ethers';
-import { ordersStore } from './redux/ordersStore';
-import { tryMetamaskOpAsync } from './utils/providerAdapter';
 import watch from 'redux-watch';
 
 type Props = {};
 
 type State = {
-  metamaskEventsBound: boolean,
-  isMetamaskProviderDetected: boolean,
-  isConnected: boolean,
-  showManualLoginModal: boolean,
 };
 
 class App extends React.Component<Props, State> {
@@ -38,128 +31,120 @@ class App extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      metamaskEventsBound: false,
-      isMetamaskProviderDetected: false,
-      isConnected: false,
-      showManualLoginModal: false,
     };
   }
 
   async componentDidMount() {
-    this.subscribeConnected();
-    this.subscribeDisconnected();
-
-    const isMetamaskProviderDetected = !!await detectEthereumProvider();
-    this.setState({ isMetamaskProviderDetected });
-
-    if (isMetamaskProviderDetected) {
-      this.ensureMetamaskEventsBound((window as any).ethereum);
-    }
   }
 
-  ensureMetamaskEventsBound = (metamaskApi: any) => {
-    if (this.state.metamaskEventsBound) {
-      return;
-    }
-
-    metamaskApi.on('accountsChanged', (accounts: Array<string>) => {
-      if (accounts.length) {
-        const networkId = connectionStore.getState().networkId;
-        const account = accounts[0];
-        connectionStore.dispatch(connected({ networkId, account }));
-      } else {
-        connectionStore.dispatch(disconnected());
-      }
-    });
-
-    metamaskApi.on('chainChanged', (networkId: string) => {
-      const account = connectionStore.getState().account;
-      connectionStore.dispatch(connected({ networkId, account }));
-    });
-
-    this.setState({ metamaskEventsBound: true });
-  };
-
-  toggleManualLoginModal = () => {
-    this.setState((prevState) => ({
-      showManualLoginModal: !prevState.showManualLoginModal,
-    }));
-  };
-
-  metamaskLogin = async () => {
-    const metamaskApi = (window as any).ethereum;
-    const networkId = await metamaskApi.request({ method: 'eth_chainId' });
-
-    const metamaskProvider = new ethers.providers.Web3Provider(metamaskApi);
-    let accounts: Array<string> | null = null;
-    const isRequestSuccess = await tryMetamaskOpAsync(async () => {
-      accounts = await metamaskProvider.send('eth_requestAccounts', []);
-    });
-
-    if (accounts && isRequestSuccess) {
-      const account = accounts[0];
-      connectionStore.dispatch(connected({ networkId, account }));
-      alertStore.dispatch(alertClear());
-    }
-  };
-
-  subscribeConnected = () => {
-    const w = watch(connectionStore.getState, 'account');
-    connectionStore.subscribe(w((newAccount, oldAccount) => {
-      if (oldAccount !== newAccount && newAccount) {
-        this.setState({
-          showManualLoginModal: false,
-          isConnected: true,
-        });
-      }
-    }));
-  };
-
-  subscribeDisconnected = () => {
-    const w = watch(connectionStore.getState, 'account');
-    connectionStore.subscribe(w((newAccount, oldAccount) => {
-      if (oldAccount !== newAccount && !newAccount) {
-        this.setState({ isConnected: false });
-      }
-    }));
-  };
-
   render() {
-    const isConnectedToTestnet = !!(connectionStore.getState().account && connectionStore.getState().networkId !== '0x1');
     return (
       <>
-        <div className="d-grid gap-3">
-          <div>
-            <Header isConnected={this.state.isConnected}
-              isMetamaskProviderDetected={this.state.isMetamaskProviderDetected}
-              toggleManualLoginModal={this.toggleManualLoginModal}
-              metamaskLogin={this.metamaskLogin}
-            />
-            <Banner show={isConnectedToTestnet} />
-          </div>
-          <div>
-            <Container>
-              <Row>
-                <Col>
-                  <FlyweightAlert />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12} lg={8}>
-                  {connectionStore.getState().account ? (
-                    <OrdersCard className="mb-3 mb-lg-0" />
-                  ) : (
-                    <WelcomeCard className="mb-3 mb-lg-0" />
-                  )}
-                </Col>
-                <Col xs={12} lg={4}>
-                  <NewOrderCard isMetamaskProviderDetected={this.state.isMetamaskProviderDetected} />
-                </Col>
-              </Row>
-            </Container>
-            <PlainTextLoginModal show={this.state.showManualLoginModal} onHide={this.toggleManualLoginModal} />
-          </div>
-        </div>
+        <Header />
+        <Container fluid>
+          <Row className="wrapper-section">
+            <Col xs={12} lg={6} className="px-5">
+              <h1>
+                Flyweight is a DAPP that allows web3 users to execute price-triggered orders via Uniswap v3 liquidity pools.
+              </h1>
+              <Button className="primary">
+                View whitepaper
+              </Button>
+            </Col>
+            <Col xs={12} lg={6} className="px-5">
+              <h2>
+                What crypto problem does Flyweight solve?
+              </h2>
+              <p>
+                Currently, trigger-based orders are only supported on CEX or a DEX that requires unlimited token approvals for a wallet. Some platforms even require KYC due to their "decentralized" nature.
+              </p>
+              <p>
+                Unfortunately, current CEX have trust issues, primarily caused by the FTX debacle. Crypto projects are also known for rugs & hacks.
+              </p>
+              <p>
+                Uniswap currently does not support trigger-based orders. They currently suggest a suboptimal alternative of setting LP ranges. This is not a "true" trigger-based order, because the trade "unswaps" itself if the price reverses above/below the LP price.
+              </p>
+            </Col>
+          </Row>
+          <Row className="mt-4 flex-column justify-content-center wrapper-section">
+            <Col xs={12} className="text-center">
+              <h2>
+                How does Flyweight work?
+              </h2>
+            </Col>
+            <Col xs={12} className="d-flex justify-content-around flex-wrap mt-4">
+              <DiagramOrderCreation />
+              <DiagramOrderExecution />
+            </Col>
+            <Col xs={12} className="d-flex justify-content-around flex-wrap mt-5">
+              <DiagramOrderCancellation />
+            </Col>
+          </Row>
+          <Row className="mt-4 flex-column justify-content-center wrapper-section wrapper-security">
+            <Col xs={12} className="text-center">
+              <h2>
+                Security aspects upheld by Flyweight?
+              </h2>
+            </Col>
+            <Col xs={12} className="d-flex mt-4 px-5">
+              <ul>
+                <li>
+                  Smart contracts are immutable (no proxy contract - no rugging, e.g.: dictum exchange).
+                </li>
+                <li>
+                  Smart contract allows users to cancel new/untriggered orders & get their funds sent directly into their wallet (self custody). UI makes this easier for users via a button.
+                </li>
+                <li>
+                  Supported ERC20's are verified against their contract address, in addition to their token symbol. Whilst not necessary, this helps protect users against accidentally creating orders for unintended tokens that have the same symbol, but a different contract address.
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  Deposited ERC20's are in custody of the smart contract, not an EOA wallet. The smart contract has no "admin" or "withdraw" function built-in.
+                </li>
+                <li>
+                  Flyweight only supports ERC20's that are expected to remain highly liquid going into the future (including the bear market). Whilst not necessary, this helps protects users against uniswap slippage with "long-tail risk" coins.
+                </li>
+                <li>
+                  If a contract change is required, a new contract needs to be deployed for flyweight. This is an advantage from a user perspective, & a downside from a developer perspective. This is an intentional decision by the DAPP developer.
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  100% of flyweight is open source.
+                </li>
+                <li>
+                  Flyweight is only launched on Ethereum & not on other L1's such as BSC, Solana etc. This is because the developer believes that Ethereum is the only trustworthy L1 smart-contract platform from a decentralisation perspective (even considering the OFAC compliance), with others being highly centralised.
+                </li>
+                <li>
+                  There is no DAO, thus making protocol changes/political coups impossible.
+                </li>
+                <li>
+                  Contracts are verified on Etherscan.
+                </li>
+              </ul>
+            </Col>
+          </Row>
+          <Row className="mt-4 flex-column justify-content-center wrapper-section">
+            <Col xs={12} className="d-flex justify-content-center">
+              <h2>Contributing</h2>
+            </Col>
+            <Col xs={12} className="d-flex justify-content-center mt-4">
+              <div>
+                <a href="https://github.com/0xmn1?tab=repositories&q=flyweight-&type=&language=&sort=" title="Open github projects in a new tab">
+                  <Button className="primary">
+                    View source code on Github
+                  </Button>
+                </a>
+                <a href="https://goerli.etherscan.io/address/0xc7A45A1d083DaB3F0b8AdfdE9Bab4f8996851Ff0#code" title="Open etherscan flyweight smart contracts in a new tab">
+                  <Button className="primary">
+                    View verified contracts on Etherscan
+                  </Button>
+                </a>
+              </div>
+            </Col>
+          </Row>
+        </Container>
       </>
     );
   }
