@@ -1,0 +1,29 @@
+@import "./flyweight-theme.scss";
+
+.bgBlack {
+  background: $fw-black;
+}
+
+.bgMystic {
+  background: $fw-mystic;
+}
+
+.wrapperSection {
+  min-height: 90vh;
+}
+
+.animFadeDown {
+  animation: fade-down 3s infinite ease-out;
+}
+
+@keyframes fade-down {
+  from {
+    bottom: 20px;
+    opacity: 0.8;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0.2;
+  }
+}

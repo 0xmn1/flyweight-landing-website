@@ -7,21 +7,18 @@
  */
 
 %base-btn {
-  border-radius: 100px !important;
-  color: $fw-white !important;
-  font-size: 0.9rem;
-  font-weight: bold;
+  border-radius: 6px !important;
+  color: $fw-nile-blue !important;
 
   &:hover,
   &:active {
     color: $fw-white !important;
-    text-decoration: underline !important;
   }
 }
 
 .primary {
   @extend %base-btn;
-  background: $fw-lochmara !important;
+  background: $fw-blizzard-blue !important;
 
   &:hover,
   &:active {
