@@ -1,0 +1,35 @@
+@import "../../flyweight-theme.scss";
+
+%margin-bottom {
+  margin-bottom: 1.2rem;
+}
+
+.listWrapper {
+  color: $fw-white;
+  margin-right: 100px;
+}
+
+.listHeading {
+  @extend %margin-bottom;
+  font-size: $fw-font-sm * 1rem;
+  font-weight: bold;
+}
+
+.list {
+  list-style: none;
+
+  li:not(:last-child) {
+    @extend %margin-bottom;
+  }
+
+  a {
+    color: $fw-white;
+    font-size: $fw-font-xs * 1rem;
+    text-decoration: none;
+
+    &:hover {
+      color: $fw-blizzard-blue;
+      text-decoration: underline;
+    }
+  }
+}
