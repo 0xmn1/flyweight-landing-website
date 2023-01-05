@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './DiagramOrderExecution.module.scss';
 
 const DiagramOrderExecution = (props: unknown) => (
-  <img src={OrderExecution} alt="diagram of order execution" />
+  <img src={OrderExecution} alt="diagram of order execution" className={styles.figure} />
 );
 
 export default DiagramOrderExecution;

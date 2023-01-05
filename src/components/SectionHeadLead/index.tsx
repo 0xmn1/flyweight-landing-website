@@ -6,10 +6,12 @@ const SectionHeadLead = () => (
     <h1>
       The Flyweight DAPP adds price-triggerable orders for Uniswap v3 LP pools.
     </h1>
-    <div className="my-4"></div>
-    <Button className="primary">
-      View whitepaper
-    </Button>
+    <div className="my-md-4"></div>
+    <div className="mb-4 mb-md-0">
+      <Button className="primary">
+        View whitepaper
+      </Button>
+    </div>
   </>
 );
 
