@@ -22,10 +22,10 @@ const App = () => (
     <Header />
     <Container fluid>
       <Row className={`py-4 align-items-center ${styles.wrapperSection}`}>
-        <Col xs={12} lg={6} className="px-5">
+        <Col xs={12} lg={6} className="px-md-5">
           <SectionHeadLead />
         </Col>
-        <Col xs={12} lg={6} className="px-5">
+        <Col xs={12} lg={6} className="px-md-5">
           <SectionHeadUserProblem />
         </Col>
         <Col xs={12} className="text-center">
