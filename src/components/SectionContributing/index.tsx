@@ -5,7 +5,7 @@ import styles from './SectionContributing.module.scss';
 
 const SectionContributing = () => (
   <>
-    <div className={styles.listWrapper}>
+    <div className={`mb-5 mb-md-0 me-md-5 ${styles.listWrapper}`}>
       <h6 className={styles.listHeading}>Source code</h6>
       <ul className={`mb-0 px-0 ${styles.list}`}>
         <li>
@@ -30,7 +30,7 @@ const SectionContributing = () => (
         </li>
       </ul>
     </div>
-    <div className={styles.listWrapper}>
+    <div className={`me-md-5 ${styles.listWrapper}`}>
       <h6 className={styles.listHeading}>Goerli chain</h6>
       <ul className={`mb-0 px-0 ${styles.list}`}>
         <li>

@@ -21,7 +21,7 @@ const App = () => (
   <>
     <Header />
     <Container fluid>
-      <Row className={`py-4 align-items-center ${styles.wrapperSection}`}>
+      <Row className="py-4 align-items-center">
         <Col xs={12} lg={6} className="px-md-5">
           <SectionHeadLead />
         </Col>
@@ -32,26 +32,26 @@ const App = () => (
           <ChevronDown size={40} className={`position-relative ${styles.animFadeDown}`} />
         </Col>
       </Row>
-      <Row className={`py-4 flex-column justify-content-center ${styles.wrapperSection} ${styles.bgMystic}`}>
+      <Row className={`py-4 flex-column justify-content-center ${styles.bgMystic}`}>
         <Col xs={12} className="text-center">
           <SectionHowItWorks />
         </Col>
       </Row>
-      <Row className={`py-4 flex-column justify-content-center bg-crease ${styles.wrapperSection}`}>
+      <Row className="py-4 flex-column justify-content-center">
         <Col xs={12} className="text-center">
           <SectionSecurityLead />
         </Col>
-        <Col xs={12} className="mt-4 px-5 d-flex flex-wrap">
+        <Col xs={12} className="mt-4 px-md-5 d-flex flex-wrap">
           <SectionSecurityCards />
         </Col>
       </Row>
-      <Row className={`pt-4 pb-5 flex-column align-content-center ${styles.wrapperSection} ${styles.bgMystic}`}>
-        <Col xs={12} md={10} className="px-5 text-center">
+      <Row className={`pt-4 pb-5 flex-column align-content-center ${styles.bgMystic}`}>
+        <Col xs={12} md={10} className="px-md-5 text-center">
           <SectionFaq />
         </Col>
       </Row>
-      <Row className={`py-4 justify-content-center bg-crease ${styles.bgBlack}`}>
-        <Col xs={12} md={10} className="d-flex px-5">
+      <Row className={`py-4 justify-content-center ${styles.bgBlack}`}>
+        <Col xs={12} md={10} className="d-flex flex-wrap px-md-5">
           <SectionContributing />
         </Col>
       </Row>

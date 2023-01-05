@@ -1,4 +1,5 @@
 import Card from 'react-bootstrap/Card';
+import { Col } from 'react-bootstrap';
 import IconRound from '../IconRound';
 import React from 'react';
 import styles from './SectionSecurityCard.module.scss';
@@ -9,7 +10,7 @@ type SectionSecurityCardProps = {
 };
 
 const SectionSecurityCard = (props: SectionSecurityCardProps) => (
-  <article className={`d-flex p-3 ${styles.wrapper}`}>
+  <Col xs={12} sm={6} lg={4} className="d-flex px-sm-1 px-md-3 py-3">
     <Card className={styles.card}>
       <Card.Title className="mb-0 py-2 d-flex justify-content-center">
         <IconRound>
@@ -22,7 +23,7 @@ const SectionSecurityCard = (props: SectionSecurityCardProps) => (
         </Card.Text>
       </Card.Body>
     </Card>
-  </article>
+  </Col>
 );
 
 export default SectionSecurityCard;

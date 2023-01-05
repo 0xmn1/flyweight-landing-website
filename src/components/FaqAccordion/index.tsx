@@ -1,5 +1,6 @@
 import Accordion from 'react-bootstrap/Accordion';
 import React from 'react';
+import styles from './FaqAccordion.module.scss';
 
 const Faq = () => (
   <Accordion>
@@ -128,7 +129,7 @@ const Faq = () => (
       </Accordion.Body>
     </Accordion.Item>
     <Accordion.Item eventKey="7">
-      <Accordion.Header>Is there a &quot;Flyweight&quot; token i can purchase/speculate on?</Accordion.Header>
+      <Accordion.Header>Is there a &quot;Flyweight&quot; token i can purchase / speculate on?</Accordion.Header>
       <Accordion.Body className="text-start">
         <p>
           No.
