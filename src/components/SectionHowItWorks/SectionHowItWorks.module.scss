@@ -1,3 +1,10 @@
+@import "../../flyweight-theme.scss";
+
 .figureDescription {
   flex-basis: 40%;
+}
+
+.articleOrderExecution {
+  border-bottom: 1px solid $fw-mercury;
+  border-top: 1px solid $fw-mercury;
 }
