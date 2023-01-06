@@ -17,7 +17,7 @@ const Header = (props: unknown) => (
         </Stack>
       </Navbar.Brand>
       <Stack direction="horizontal" gap={2}>
-        <a href="https://flyweight.me/">
+        <a href="https://app.flyweight.me/">
           <Button onClick={() => { }} className="primary">
             Launch App
           </Button>
