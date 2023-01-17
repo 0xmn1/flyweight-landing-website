@@ -8,9 +8,11 @@ const SectionHeadLead = () => (
     </h1>
     <div className="my-md-4"></div>
     <div className="mb-4 mb-md-0">
-      <Button className="primary">
-        View whitepaper
-      </Button>
+      <a href="flyweight-whitepaper.pdf" title="Open flyweight whitepaper pdf in a new browser tab" target="_blank">
+        <Button className="primary">
+          View whitepaper
+        </Button>
+      </a>
     </div>
   </>
 );
